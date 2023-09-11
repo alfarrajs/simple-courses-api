@@ -1,5 +1,5 @@
 let { courses } = require("../data/courses.js");
-const { validationResult } = require("express-validator");
+let { validationResult } = require("express-validator");
 // G E T A L L  C O U R S E S  R E Q U E S T
 
 const getAllCourses = (req, res) => {
