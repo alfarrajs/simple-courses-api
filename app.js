@@ -69,7 +69,7 @@ app.put("/api/courses/:id", (req, res) => {
     (courses) => courses.id === parseInt(req.params.id)
   );
   if (!wantedCourse)
-    res.status(404).send("The course with the given ID was not found.");
+    res.status(404).json({ message: "The course with the given ID was not found." });
   wantedCourse.name = req.body.name;
   wantedCourse.price = req.body.price;
   res.send(wantedCourse);
