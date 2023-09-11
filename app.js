@@ -88,9 +88,9 @@ app.delete("/api/courses/:id", (req, res) => {
 });
 // end the delete request
 
-// app.listen(1900, () => {
-//   console.log("Server running on port 1900");
-// });
+app.listen(1900, () => {
+  console.log("Server running on port 1900");
+});
 
 // experss has by default a body parser , so you don't need to install it
 // body parser is a middleware that parse the body of the request
