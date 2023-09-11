@@ -64,14 +64,15 @@ app.post(
 );
 // end the post request
 
-app.put("/api/courses/:id", (req, res) => {
+//patch vs put : patch is used to update one property , put is used to update all the properties
+app.patch("/api/courses/:id", (req, res) => {
   let wantedCourse = courses.find(
     (courses) => courses.id === parseInt(req.params.id)
-  );
-  if (!wantedCourse)
-    res.status(404).json({ message: "The course with the given ID was not found." });
-  wantedCourse.name = req.body.name;
-  wantedCourse.price = req.body.price;
+  ); // return me an object
+  if (!wantedCourse) res.status(404).send({ msg: "course not found" });
+   
+  wantedCourse = {...wantedCourse, ...req.body };
+  // !objects mearged by reference the new propersties will override the old ones
   res.send(wantedCourse);
 });
 // end the put request
