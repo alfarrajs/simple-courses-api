@@ -3,3 +3,8 @@ const courses = [
   { id: 2, name: "html", price: 2000 },
   { id: 3, name: "css", price: 3000 },
 ];
+
+
+module.exports = {
+  courses
+}

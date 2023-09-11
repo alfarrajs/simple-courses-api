@@ -1,6 +1,5 @@
-let { courses } = require("../data/courses");
-const { validationResult, body } = require("express-validator");
-
+let { courses } = require("../data/courses.js");
+const { validationResult } = require("express-validator");
 // G E T A L L  C O U R S E S  R E Q U E S T
 
 const getAllCourses = (req, res) => {
@@ -25,42 +24,28 @@ const getCourse = (req, res) => {
 
 //    P O S T  R E Q U E S T
 
-const createCourse = () => {
-  [
-    body("name")
-      .notEmpty()
-      .withMessage("title/name of book is required")
-      .isString()
-      .withMessage("title/name of book must be a string"),
-    body("price")
-      .notEmpty()
-      .withMessage("price is required")
-      .isNumeric()
-      .withMessage("price must be a number")
-      .isInt({ min: 0 })
-      .withMessage("price must be a positive number"),
-  ],
-    (req, res) => {
-      const errors = validationResult(req);
-      // ?I use validationResult to check if there is an error in the request body
+const createCourse = (req, res) => {
+  const errors = validationResult(req);
+  // ?I use validationResult to check if there is an error in the request body
 
-      if (!errors.isEmpty()) {
-        return res
-          .status(400)
-          .json(errors.formatWith(({ msg }) => msg).mapped());
-      }
+  if (!errors.isEmpty()) {
+    return res.status(400).json(errors.formatWith(({ msg }) => msg).mapped());
+  }
 
-      // ?I use return to stop the function from running
-      // ?I use formatWith to get the error message only
+  // ?I use return to stop the function from running
+  // ?I use formatWith to get the error message only
 
-      courses.push({ id: courses.length + 1, ...req.body });
-      res.status(201).json(courses);
-    };
+  courses.push({ id: courses.length + 1, ...req.body });
+  res.status(201).json(courses);
 };
-
 // P A T C H  R E Q U E S T
 
 const updateCourse = (req, res) => {
+  const errors = validationResult(req);
+
+  if (!errors.isEmpty()) {
+    return res.status(400).json(errors.formatWith(({ msg }) => msg).mapped());
+  }
   let wantedCourse = courses.find(
     (courses) => courses.id === parseInt(req.params.id)
   ); // return me an object
@@ -84,9 +69,7 @@ const deleteCourse = (req, res) => {
   res.send(courses);
 };
 
-
-
-module.exports = {  
+module.exports = {
   getAllCourses,
   getCourse,
   createCourse,
