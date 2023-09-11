@@ -1,13 +1,39 @@
-API LINK IS : ```https://alfarra-courses-workshop.onrender.com/api/courses```
+Simple courses API   
+-
+The API LINK IS 
+
+```https://alfarra-courses-workshop.onrender.com/```
 
 
-TO show all courses </br>  ```https://alfarra-courses-workshop.onrender.com/api/courses```
-</br>
-TO show specific course </br>  ```https://alfarra-courses-workshop.onrender.com/api/courses:id``` // the  (:id replace it with / and  the course id e.g. /1)
-</br>
-To add a course </br> ```https://alfarra-courses-workshop.onrender.com/api/courses```  , the bodies are name,price (string,integer)
-</br>
-To upldate  a course </br> ```https://alfarra-courses-workshop.onrender.com/api/courses:id```// the  (:id replace it with / and  the course id e.g. ```/1```)
-</br>
-To delete a  course </br> ```https://alfarra-courses-workshop.onrender.com/api/courses:id```// the  (:id replace it with / and  the course id e.g. ```/1```)
+To see all courses 
+
+```https://alfarra-courses-workshop.onrender.com/api/courses```
+   the HTTP methode is ```GET```
+
+
+To see specific course 
+
+```https://alfarra-courses-workshop.onrender.com/api/courses/id```
+  replace ```id``` with the course id and the HTTP methode is ```GET```
+
+To add a course 
+
+```https://alfarra-courses-workshop.onrender.com/api/courses```
+the bodies are ```name``` and ```price``` Methode is ```POST```
+
+
+To delete a  specific course 
+
+```https://alfarra-courses-workshop.onrender.com/api/courses/id```
+  replace ```id``` with the course id and the HTTP methode is ```delete```
+  
+  
+  
+  
+To Update a specific course 
+
+```https://alfarra-courses-workshop.onrender.com/api/courses```
+the bodies are ```name``` and ```price``` Methode is ```PUT```
+  
+
 
