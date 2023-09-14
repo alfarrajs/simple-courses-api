@@ -33,7 +33,7 @@ To delete a  specific course
 To Update a specific course 
 
 ```https://alfarra-courses-workshop.onrender.com/api/courses```
-the bodies are ```name``` and ```price``` Methode is ```PUT```
+the bodies are ```name``` and ```price``` Methode is ```PATCH```
   
 
 
