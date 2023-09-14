@@ -12,13 +12,13 @@ const {
 const {validationSchema} = require("../middlewares/validationsScheme.js");
 
 router
-  .route("/")
+.route("/")
   .get(getAllCourses)
   .post(validationSchema,createCourse)
     
 
 router
-  .route("/:id")
+.route("/:id")
   .get(getCourse)
   .patch(
     validationSchema,

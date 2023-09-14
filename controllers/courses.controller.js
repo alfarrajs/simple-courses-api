@@ -1,11 +1,15 @@
-let { courses } = require("../data/courses.js");
 let { validationResult } = require("express-validator");
+const Course = require("../models/courses.model.js");
 // G E T A L L  C O U R S E S  R E Q U E S T
 
-const getAllCourses = (req, res) => {
-  res.send(courses);
+const getAllCourses = async (req, res) => {
+  try {
+    const courses = await Course.find();
+    console.log(courses); // array of objects 
+  } catch (error){
+    res.status(500).json({ error: "Error retrieving courses" });
+  }
 };
-
 //  G E T  S I N G L E  C O U R S E R E Q U E S T
 const getCourse = (req, res) => {
   let wantedCourse = courses.find(
