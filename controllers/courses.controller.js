@@ -4,33 +4,29 @@ const Courses = require("../models/courses.model.js");
 const getAllCourses = async (req, res) => {
   try {
     const foundCource = await Courses.find();
-    res.json(foundCource) // array of objects 
-  } catch (error){
+    res.json(foundCource); // array of objects
+  } catch (error) {
     console.log(error);
     res.status(500).json({ error: "Error retrieving courses" });
   }
 };
 
+const getCourse = async (req, res) => {
+     try{
+            const foundCource = await Courses.findById(req.params.id);
+            res.json(foundCource); 
 
-
-
-
-
-const getCourse = (req, res) => {
-  let wantedCourse = courses.find(
-    (courses) => courses.id === parseInt(req.params.id)
-  );
-  if (!wantedCourse)
-    res.status(404).send("The course with the given ID was not found.");
-  res.send(wantedCourse);
-  
+     } 
+      catch(error){
+            console.log(error);
+            res.status(500).json({ error: "Error retrieving course" });
+      }
 };
-
 
 const createCourse = (req, res) => {
   // const errors = validationResult(req);
-   
-   const { title, price } = req.body;
+
+  const { title, price } = req.body;
   const newCourse = new Courses({
     title,
     price,
@@ -38,20 +34,16 @@ const createCourse = (req, res) => {
   try {
     const savedCourse = newCourse.save();
     res.status(201).json(savedCourse);
-  }  catch (error) {
+  } catch (error) {
     console.log(error);
     res.status(500).json({ error: "Error creating course" });
   }
-  
-  
-  
 
   // if (!errors.isEmpty()) {
   //   return res.status(400).json(errors.formatWith(({ msg }) => msg).mapped());
   // }
 
-
-  // const Course = new 
+  // const Course = new
   // res.status(201).json(courses);
 };
 
@@ -63,14 +55,13 @@ const updateCourse = (req, res) => {
   }
   let wantedCourse = courses.find(
     (courses) => courses.id === parseInt(req.params.id)
-  ); 
+  );
   if (!wantedCourse) res.status(404).send({ msg: "course not found" });
 
   wantedCourse = { ...wantedCourse, ...req.body };
 
   res.send(wantedCourse);
 };
-
 
 const deleteCourse = (req, res) => {
   let wantedCourse = courses.find(
