@@ -1,26 +1,37 @@
 let { validationResult } = require("express-validator");
 const Courses = require("../models/courses.model.js");
+const httpResponsesText = require("../utils/httpsResponseText.js");
+
+// how to use jsend standard for response
 
 const getAllCourses = async (req, res) => {
   try {
-    const foundCource = await Courses.find();
-    res.json(foundCource); // array of objects
+    const limit = parseInt(req.query.limit) || 10;
+    const page = parseInt(req.query.page) || 1;
+    const skip = (page - 1) * limit;
+    const foundCource = await Courses.find({}, { __v: false }).limit(limit).skip(skip);
+    if (!foundCource)
+      return res
+        .status(404)
+        .json({ status: httpResponsesText.fail, data: foundCource });
+
+    res.json({ status: httpResponsesText.success, data: foundCource }); // array of objects
   } catch (error) {
     console.log(error);
-    res.status(500).json({ error: "Error retrieving courses" });
+    res.status(500).json({ status: httpResponsesText.fail, data: foundCource });
   }
 };
 
 const getCourse = async (req, res) => {
-     try{
-            const foundCource = await Courses.findById(req.params.id);
-            res.json(foundCource); 
-
-     } 
-      catch(error){
-            console.log(error);
-            res.status(500).json({ error: "Error retrieving course" });
-      }
+  try {
+    const foundCource = await Courses.findById(req.params.id);
+    if (!foundCource)
+      return res.status(404).json({ status: "fail", data: foundCource });
+    res.json({ status: "success", data: foundCource });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ msg: "Error getting course" });
+  }
 };
 
 const createCourse = (req, res) => {
