@@ -1,9 +1,10 @@
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
-const uri = "mongodb+srv://alfarra:$3AZF$004@learn-mongo-db.cknzxfd.mongodb.net/Welcome";
+require("dotenv").config();
+const uri = process.env.MONGO_URL;
+const httpsResponseText = require("./utils/httpsResponseText.js");
 const cors = require("cors");
-
 
 app.use(cors({
   origin: "*",
@@ -23,7 +24,12 @@ app.use(express.json());
 
 let coursesRotuer = require("./routes/courses.route.js");
 app.use("/api/courses", coursesRotuer); 
-
-app.listen(1900, () => {
+app.all("*", (req, res) => {
+  res.status(404).json({
+    status:httpsResponseText.error,
+    message: "Page not found",
+  });
+});
+app.listen(process.env.port || 1900, () => {
   console.log("Server running on port 1900");
 });
