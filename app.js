@@ -12,7 +12,7 @@ app.use(cors({
   allowedHeaders: ["Content-Type", "Authorization"]
 }));
 // cors is a middleware that allows us to make requests from the frontend to the backend without any issues 
-
+// middlewars is a function that allows you to access and get the access of the request and res , and then 
 
 
 mongoose.connect(uri)
@@ -21,9 +21,10 @@ mongoose.connect(uri)
 
 
 app.use(express.json());
-
+let usersRouter = require("./routes/users.route.js");
 let coursesRotuer = require("./routes/courses.route.js");
 app.use("/api/courses", coursesRotuer); 
+app.use("/api/users", usersRouter);
 app.all("*", (req, res) => {
   res.status(404).json({
     status:httpsResponseText.error,
