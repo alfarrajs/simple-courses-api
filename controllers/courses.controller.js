@@ -1,6 +1,7 @@
 let { validationResult } = require("express-validator");
 const Courses = require("../models/courses.model.js");
 const httpResponsesText = require("../utils/httpsResponseText.js");
+const asyncWrapper = require("../middlewares/asyncWrapper.js");
 
 // how to use jsend standard for response
 
@@ -9,7 +10,9 @@ const getAllCourses = async (req, res) => {
     const limit = parseInt(req.query.limit) || 10;
     const page = parseInt(req.query.page) || 1;
     const skip = (page - 1) * limit;
-    const foundCource = await Courses.find({}, { __v: false }).limit(limit).skip(skip);
+    const foundCource = await Courses.find({}, { __v: false })
+      .limit(limit)
+      .skip(skip);
     if (!foundCource)
       return res
         .status(404)
@@ -23,15 +26,10 @@ const getAllCourses = async (req, res) => {
 };
 
 const getCourse = async (req, res) => {
-  try {
-    const foundCource = await Courses.findById(req.params.id);
-    if (!foundCource)
-      return res.status(404).json({ status: "fail", data: foundCource });
-    res.json({ status: "success", data: foundCource });
-  } catch (error) {
-    console.log(error);
-    res.status(500).json({ msg: "Error getting course" });
-  }
+  const foundCource = await Courses.findById(req.params.id);
+  if (!foundCource)
+    return res.status(404).json({ status: "fail", data: foundCource });
+  res.json({ status: "success", data: foundCource });
 };
 
 const createCourse = (req, res) => {
@@ -49,13 +47,6 @@ const createCourse = (req, res) => {
     console.log(error);
     res.status(500).json({ error: "Error creating course" });
   }
-
-  // if (!errors.isEmpty()) {
-  //   return res.status(400).json(errors.formatWith(({ msg }) => msg).mapped());
-  // }
-
-  // const Course = new
-  // res.status(201).json(courses);
 };
 
 const updateCourse = (req, res) => {
